@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BizFly Cloud</title>
+  <link rel="shortcut icon" href="https://bizflycloud.vn/favicon.png" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://bizflycloud.vn/favicon.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://bizflycloud.vn/favicon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://bizflycloud.vn/favicon.png">
+  <link rel="apple-touch-icon" href="https://bizflycloud.vn/favicon.png">
+  <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.7/runtime.min.js"></script>
+  <% if (process.env.NODE_ENV==='production' ) { %>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
+  <% } %>
+  <meta name="importmap-type" content="systemjs-importmap" />
+  <link rel="stylesheet" type="text/css" href="<%= process.env.BIZFLY_UI_CSS_SOURCE %>">
+  <link rel="stylesheet" type="text/css" href="<%= process.env.CAMPAIGN_CSS_SOURCE %>">
+  <script src="<%= process.env.CAMPAIGN_JS_SOURCE %>"></script>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "vue": "<%= process.env.VUE_JS_SOURCE %>",
+        "bizfly-ui": "<%= process.env.BIZFLY_UI_JS_SOURCE %>",
+        "single-spa": "<%= process.env.CDN_JS_SOURCE %>/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
+        "single-spa-vue": "<%= process.env.CDN_JS_SOURCE %>/npm/single-spa-vue@2.5.0/dist/umd/single-spa-vue.min.js",
+        "vue-router": "<%= process.env.CDN_JS_SOURCE %>/npm/vue-router@3.1.6/dist/vue-router.min.js",
+        "vuex": "<%= process.env.CDN_JS_SOURCE %>/npm/vuex/dist/vuex.min.js",
+        "axios": "<%= process.env.CDN_JS_SOURCE %>/npm/axios/dist/axios.min.js ",
+        "js-cookie": "<%= process.env.CDN_JS_SOURCE %>/npm/js-cookie@rc/dist/js.cookie.min.js",
+        "vue-i18n": "<%= process.env.CDN_JS_SOURCE %>/npm/vue-i18n@8.25.0/dist/vue-i18n.min.js",
+        "dayjs": "<%= process.env.CDN_JS_SOURCE %>/npm/dayjs@1.10.6/dayjs.min.js",
+        "ravenjs": "<%= process.env.CDN_JS_SOURCE %>/npm/raven-js@3.27.2/dist/raven.min.js",
+        "vue-raven": "<%= process.env.CDN_JS_SOURCE %>/npm/raven-js@3.27.2/dist/plugins/vue.min.js",
+        "crypto-js": "<%= process.env.CDN_JS_SOURCE %>/npm/crypto-js@4.1.1/index.min.js"
+      }
+    }
+  </script>
+  <% if (isLocal) { %>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@bizfly/root-config": "//localhost:9000/bizfly-root-config.js",
+        "@bizfly/shared": "http://localhost:8500/bizfly-shared.js",
+        "@bizfly/layout": "http://localhost:8600/js/app.js",
+        "@bizfly/single-app": "http://localhost:8700/js/app.js"
+      }
+    }
+  </script>
+  <% } %>
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+  <% if (isLocal) { %>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.js"></script>
+  <% } else { %>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+  <% } %>
+</head>
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <script>
+    System.import('@bizfly/root-config')
+  </script>
+  <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
+</body>
+</html>
